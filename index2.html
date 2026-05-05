@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spatial Scene Natura</title>
+
+    <style>
+      :root {
+        --blur: 20px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          system-ui,
+          -apple-system;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        overscroll-behavior: none;
+        background: black;
+      }
+
+      body {
+        /* height: 100vh;
+              overflow: hidden;
+              perspective: 1400px;
+              background: black; */
+        touch-action: none;
+      }
+
+      /* Scene 3D */
+      .scene {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.1s linear;
+      }
+
+      /* Layer comuni */
+      .layer {
+        position: absolute;
+        inset: -20%;
+        background-size: cover;
+        background-position: center;
+      }
+
+      /* Sfondo NATURA lontano */
+      .bg {
+        transform: translateZ(-700px) scale(1.8);
+        background-image: url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee");
+        filter: blur(0px);
+      }
+
+      /* Overlay atmosferico */
+      .mid {
+        transform: translateZ(-350px) scale(1.4);
+        background: radial-gradient(circle at top, rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.4));
+      }
+
+      /* Primo piano */
+      .fg {
+        position: fixed;
+        inset: 0;
+        transform: translateZ(0);
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+      }
+
+      .ui {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        pointer-events: none;
+      }
+
+      /* Card stile iOS */
+      .card {
+        /* position: fixed; */
+        /* bottom: 0; */
+        margin-bottom: 60px;
+        width: 90%;
+        max-width: 360px;
+        padding: 22px;
+        color: white;
+        background: rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(var(--blur));
+        -webkit-backdrop-filter: blur(var(--blur));
+        border-radius: 28px;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+      }
+
+      .card h1 {
+        font-size: 22px;
+      }
+
+      .card p {
+        margin-top: 8px;
+        opacity: 0.85;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="scene" id="scene">
+      <div class="layer bg"></div>
+      <div class="layer mid"></div>
+
+      <div class="layer fg"></div>
+    </div>
+
+    <div class="ui">
+      <div class="card">
+        <h1>Natura Spatial</h1>
+        <p>Profondità tipo iOS, Android friendly</p>
+      </div>
+    </div>
+
+    <script>
+      const scene = document.getElementById("scene");
+
+      window.addEventListener("deviceorientation", (e) => {
+        const x = e.beta || 0;
+        const y = e.gamma || 0;
+
+        scene.style.transform = `
+    rotateX(${x / 10}deg)
+    rotateY(${y / 10}deg)
+  `;
+      });
+    </script>
+  </body>
+</html>
